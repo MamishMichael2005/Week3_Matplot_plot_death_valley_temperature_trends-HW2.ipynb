@@ -1,0 +1,97 @@
+import pandas as pd
+
+df = pd.read_csv("https://raw.githubusercontent.com/Reben80/Data110-32213/e8196b155350595d2c18ddb0ca6c6e1bd9eca344/dataset/tempnormals.csv")
+
+dv = df[df['location'] == 'Death Valley']
+dh=df[df['location']=='Houston']
+dc=df[df['location']=='Chicago']
+ds=df[df['location']=='San Diego']
+
+import matplotlib.pyplot as plt
+
+descriptive_data_dv = dv['temperature'].describe()
+Average_dv = descriptive_data_dv['mean']
+print(Average_dv)
+
+plt.figure(figsize=(8,5))
+plt.style.use('ggplot')
+
+plt.axhline(y=Average_dv, linestyle='--', color='lightblue',label='Average')
+plt.plot(dv['day_of_year'], dv['temperature'], label='Death Valley Temperature')
+plt.xlabel('Day')
+plt.ylabel('Temperature')
+plt.title('Trend Temperature in Death Valley',color='orange')
+plt.grid(True)
+plt.legend(facecolor='darkgray', framealpha=.8)
+plt.show()
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+plt.figure(figsize=(12,3))
+
+# Assuming 'df' is your DataFrame and it's already loaded
+# Specifying the order of the locations
+locations_order_reversed = ['Chicago', 'San Diego', 'Houston', 'Death Valley']
+
+# Grouping the data by location and month, then calculating the average temperature
+heatmap_data = df.groupby(['location', 'month'])['temperature'].mean().unstack(level=1)
+
+# Reordering the dataframe based on the reversed location order
+heatmap_data_reversed = heatmap_data.reindex(locations_order_reversed)
+
+# Plotting the heatmap
+
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+numerical_matrix = np.random.randint(1, 101, size=(5, 5))
+
+sns.heatmap(heatmap_data_reversed, cmap="YlOrRd", linewidths=0.5, annot=False)
+plt.title('Average Monthly Temperature Normals by Location')
+plt.xlabel('Month')
+plt.ylabel('Location')
+plt.show()
+
+numerical_matrix = np.random.randint(1, 101, size=(5, 5))
+print(numerical_matrix)
+
+plt.title("Heatmap of a 5x5 Numerical Matrix")
+plt.xlabel("Column Index")
+plt.ylabel("Row Index")
+
+plt.show()
+
+import pandas as pd
+
+# Creating the DataFrame
+data = {'Fruit': ['Apple', 'Banana', 'Apple', 'Banana', 'Cherry'],
+        'Quantity': [10, 5, 8, 12, 7]}
+df = pd.DataFrame(data)
+
+# Grouping by 'Fruit' and then summing the 'Quantity' for each group
+grouped_data = df.groupby('Fruit')['Quantity'].sum()
+
+# Display the result
+print(grouped_data)
+
+#Set the size of the plot
+plt.figure(figsize=(14, 6))
+
+# Group data by location
+grouped = df.groupby('location')
+
+# Loop through each location group and plot the temperature against the day of the year
+for name, group in grouped:
+    plt.plot(group['day_of_year'], group['temperature'], label=name)
+
+# Adding plot title and labels
+plt.title('Temperature Trends by Location Throughout the Year')
+plt.xlabel('Day of the Year')
+plt.ylabel('Temperature')
+
+
+plt.legend()
+plt.show()
+
